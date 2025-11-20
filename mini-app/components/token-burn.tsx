@@ -19,7 +19,6 @@ export default function TokenBurn() {
   const contractAddress = "0xa66b448f97cbf58d12f00711c02bac2d9eac6f7f";
   const zeroAddress = "0x0000000000000000000000000000000000000000";
 
-  /* eslint-disable-next-line react-hooks/exhaustive-deps */
   useEffect(() => {
     async function fetchData() {
       try {
@@ -40,6 +39,7 @@ export default function TokenBurn() {
 
         // Filter burn events (to zero address) and accumulate
         const burnEvents: BurnEvent[] = [];
+        let cumulative = 0;
         txs.forEach((tx: { to: string; value: string; timeStamp: string; }) => {
           if (tx.to === zeroAddress) {
             const amount = parseFloat(tx.value) / 1e18; // assuming 18 decimals
@@ -84,7 +84,7 @@ export default function TokenBurn() {
     }
 
     fetchData();
-  }, []);
+  }, [previousRemaining]);
 
   if (loading) return <p>Loading burn data...</p>;
 
