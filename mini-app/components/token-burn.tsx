@@ -12,6 +12,7 @@ export default function TokenBurn() {
   const [price, setPrice] = useState<number | null>(null);
   const [burns, setBurns] = useState<BurnEvent[]>([]);
   const [totalSupply, setTotalSupply] = useState<number | null>(null);
+  const [maxSupply, setMaxSupply] = useState<number | null>(null);
   const [previousRemaining, setPreviousRemaining] = useState<number | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -59,6 +60,17 @@ export default function TokenBurn() {
         const totalSupplyJson = await totalSupplyRes.json();
         const totalSupplyValue = parseFloat(totalSupplyJson.result.totalSupply) / 1e18;
         setTotalSupply(totalSupplyValue);
+        // Fetch max supply from Coingecko
+        try {
+          const cgRes = await fetch(
+            "https://api.coingecko.com/api/v3/coins/spheron-network?localization=false&tickers=false&market_data=true&community_data=false&developer_data=false&sparkline=false"
+          );
+          const cgJson = await cgRes.json();
+          const cgMax = cgJson.market_data.max_supply;
+          setMaxSupply(cgMax);
+        } catch (e) {
+          console.error("Failed to fetch max supply from Coingecko", e);
+        }
         const remaining = totalSupplyValue - cumulativeBurn;
         if (previousRemaining !== null && remaining < previousRemaining) {
           console.warn("Token supply decreased");
@@ -109,6 +121,11 @@ export default function TokenBurn() {
       {totalSupply !== null && previousRemaining !== null && (
         <p className="mt-2">
           Remaining $OPENX supply: <strong>{previousRemaining.toFixed(4)}</strong>
+        </p>
+      )}
+      {maxSupply !== null && (
+        <p className="mt-2">
+          Max $OPENX supply: <strong>{maxSupply.toLocaleString()}</strong>
         </p>
       )}
     </div>
