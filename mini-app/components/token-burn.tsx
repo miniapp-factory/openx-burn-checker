@@ -11,6 +11,8 @@ interface BurnEvent {
 export default function TokenBurn() {
   const [price, setPrice] = useState<number | null>(null);
   const [burns, setBurns] = useState<BurnEvent[]>([]);
+  const [totalSupply, setTotalSupply] = useState<number | null>(null);
+  const [previousRemaining, setPreviousRemaining] = useState<number | null>(null);
   const [loading, setLoading] = useState(true);
 
   const contractAddress = "0xa66b448f97cbf58d12f00711c02bac2d9eac6f7f";
@@ -35,6 +37,7 @@ export default function TokenBurn() {
         const txs = txJson.result;
 
         // Filter burn events (to zero address) and accumulate
+        let cumulative = 0;
         const burnEvents: BurnEvent[] = [];
         txs.forEach((tx: { to: string; value: string; timeStamp: string; }) => {
           if (tx.to === zeroAddress) {
@@ -49,6 +52,18 @@ export default function TokenBurn() {
         });
 
         setBurns(burnEvents);
+        const cumulativeBurn = burnEvents.reduce((sum, e) => sum + parseFloat(e.amount), 0);
+        const totalSupplyRes = await fetch(
+          `https://api.basescan.org/api?module=stats&action=tokeninfo&contractaddress=${contractAddress}`
+        );
+        const totalSupplyJson = await totalSupplyRes.json();
+        const totalSupplyValue = parseFloat(totalSupplyJson.result.totalSupply) / 1e18;
+        setTotalSupply(totalSupplyValue);
+        const remaining = totalSupplyValue - cumulativeBurn;
+        if (previousRemaining !== null && remaining < previousRemaining) {
+          console.warn("Token supply decreased");
+        }
+        setPreviousRemaining(remaining);
       } catch (e) {
         console.error("Failed to fetch burn data", e);
       } finally {
@@ -89,6 +104,11 @@ export default function TokenBurn() {
       {price && (
         <p className="mt-4">
           Current $OPENX price: <strong>${price.toFixed(2)}</strong>
+        </p>
+      )}
+      {totalSupply !== null && previousRemaining !== null && (
+        <p className="mt-2">
+          Remaining $OPENX supply: <strong>{previousRemaining.toFixed(4)}</strong>
         </p>
       )}
     </div>
