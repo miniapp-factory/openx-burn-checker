@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useState } from "react";
-import { Button } from "@/components/ui/button";
 
 interface BurnEvent {
   timestamp: string;
@@ -37,8 +36,7 @@ export default function TokenBurn() {
 
         // Filter burn events (to zero address) and accumulate
         const burnEvents: BurnEvent[] = [];
-        let cumulative = 0;
-        txs.forEach((tx: any) => {
+        txs.forEach((tx: { to: string; value: string; timeStamp: string; }) => {
           if (tx.to === zeroAddress) {
             const amount = parseFloat(tx.value) / 1e18; // assuming 18 decimals
             cumulative += amount;
