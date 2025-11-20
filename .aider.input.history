@@ -52,3 +52,9 @@
 
 # 2025-11-20 16:49:02.574593
 +apply changes
+
+# 2025-11-20 17:13:35.456370
++capture token supply from https://basescan.org/token/0xa66b448f97cbf58d12f00711c02bac2d9eac6f7f and when decrease, notify and remaining number of $OPENX token.
+
+# 2025-11-20 17:13:35.566711
++capture token supply from https://basescan.org/token/0xa66b448f97cbf58d12f00711c02bac2d9eac6f7f and when decrease, notify and remaining number of $OPENX token.
