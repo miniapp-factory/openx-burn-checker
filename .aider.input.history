@@ -36,3 +36,19 @@
 +check https://basescan.org/token/0xa66b448f97cbf58d12f00711c02bac2d9eac6f7f and find token burn transactions.
 +
 +show token burn history per 100 transaction and display cumulative token burn amount on top of app with USD equivalent price.
+
+# 2025-11-20 16:48:02.131113
++count the total number of app from "https://miniapp-factory.marketplace.openxai.network/factory" and estimate cumulative token burn amount.
++
++count starting from 1001 app and multiply 10 $OPENX and show the number.
+
+# 2025-11-20 16:48:02.131705
++count the total number of app from "https://miniapp-factory.marketplace.openxai.network/factory" and estimate cumulative token burn amount.
++
++count starting from 1001 app and multiply 10 $OPENX and show the number.
+
+# 2025-11-20 16:49:02.574058
++apply changes
+
+# 2025-11-20 16:49:02.574593
++apply changes
