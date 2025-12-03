@@ -82,3 +82,17 @@
 +
 +display current price and 7 days chart data from following URL.
 +https://www.coingecko.com/en/coins/openxai
+
+# 2025-12-03 17:32:28.180847
++modify price descending order from latest day to day1.
++
++create 7 days chart on top.
++
++Display burn history on top.
+
+# 2025-12-03 17:32:28.181203
++modify price descending order from latest day to day1.
++
++create 7 days chart on top.
++
++Display burn history on top.
