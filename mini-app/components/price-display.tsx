@@ -15,7 +15,7 @@ export default function PriceDisplay() {
         const currentPrice = data.market_data.current_price.usd;
         const sparkline = data.market_data.sparkline_7d.price;
         setPrice(currentPrice);
-        setChartData(sparkline);
+        setChartData([...sparkline].reverse());
       } catch (e) {
         console.error('Failed to fetch price', e);
       } finally {
