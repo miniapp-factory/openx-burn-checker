@@ -10,9 +10,9 @@ export default function Home() {
   return (
     <main className="flex flex-col gap-3 place-items-center place-content-center px-4 grow">
           <PriceDisplay />
+      <TokenBurn />
       <span className="text-2xl">{title}</span>
       <span className="text-muted-foreground">{description}</span>
-      <TokenBurn />
     </main>
   );
 }
